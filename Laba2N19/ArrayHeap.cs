@@ -140,15 +140,18 @@ namespace Laba2N19
                 throw new HeapException("Cannot remove element from empty Min-Heap");
             }
             int index = Array.IndexOf(_arrayHeap, node);
+            
             if (index == -1)
             {
                 //throw new HeapException("Not found element in Min-Heap");
                 return;
             }
+            T value = _arrayHeap[index];
+            _arrayHeap[index] = _arrayHeap[LeftChildIndex(index)];
             Count--;
-            if (index < Count)
+            if (LeftChildIndex(index) < Count)
             {
-                Array.Copy(_arrayHeap, index + 1, _arrayHeap, index, Count - index);
+                Array.Copy(_arrayHeap, LeftChildIndex(index) + 1, _arrayHeap, LeftChildIndex(index), Count - LeftChildIndex(index));
             }           
             Heapify(index);
             //return ret;

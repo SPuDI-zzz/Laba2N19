@@ -67,6 +67,8 @@ namespace Laba2N19
             heap.Add(12);
             heap.Add(9);
             heap.Print();
+            heap.Remove(13);
+            heap.Print();
             
             Console.ReadLine();
         }
