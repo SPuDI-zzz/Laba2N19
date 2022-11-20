@@ -10,4 +10,14 @@ namespace Laba2N19
     {
         public HeapException(string message) : base(message) { }
     }
+
+    public class HeapOutOfBoundException : Exception
+    {
+        public object Value { get; }
+
+        public HeapOutOfBoundException(string message, object value) : base(message)
+        {
+            Value = value;
+        }
+    }
 }

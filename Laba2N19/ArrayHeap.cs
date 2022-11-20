@@ -16,8 +16,7 @@ namespace Laba2N19
         //private int StartPosition, EndPosition;
 
         public int Count { get; private set; }
-        private bool _isEmpty;
-        public bool IsEmpty { get { return Count == 0; } private set { _isEmpty = value; } }
+        public bool IsEmpty { get { return Count == 0; } private set { } }
 
         private bool IsFull()
         {
@@ -41,12 +40,6 @@ namespace Laba2N19
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        private int NewSize()
-        {
-            //_size *= 2;
-            return _size *= 2;
-        }
 
         private int ParentIndex(int index)
         {
@@ -73,7 +66,6 @@ namespace Laba2N19
         {
             _size = 4;
             Count = 0;
-            _isEmpty = true;
             _arrayHeap = new T[_size];
         }
 
@@ -81,7 +73,6 @@ namespace Laba2N19
         {
             _size = size > 0 && size <= int.MaxValue ? size : 4;
             Count = 0;
-            _isEmpty = true;
             _arrayHeap = new T[_size];
         }
 
@@ -140,29 +131,28 @@ namespace Laba2N19
                 throw new HeapException("Cannot remove element from empty Min-Heap");
             }
             int index = Array.IndexOf(_arrayHeap, node);
+
             if (index == -1)
             {
                 //throw new HeapException("Not found element in Min-Heap");
                 return;
             }
+
+            _arrayHeap[index] = _arrayHeap[Count - 1];
             Count--;
-            if (index < Count)
-            {
-                Array.Copy(_arrayHeap, index + 1, _arrayHeap, index, Count - index);
-            }           
+
             Heapify(index);
-            //return ret;
         }
 
         public void Print()
         {
             for (int i = 0; i < (Count / 2); i++)
             {
-                Console.WriteLine("Parent : " + _arrayHeap[i]);
+                Console.WriteLine("Parent : " + _arrayHeap[i].ToString());
                 if (LeftChildIndex(i) < Count)
-                    Console.WriteLine(" Left : " + _arrayHeap[LeftChildIndex(i)]);
+                    Console.WriteLine(" Left : " + _arrayHeap[LeftChildIndex(i)].ToString());
                 if (RightChildIndex(i) < Count)
-                    Console.WriteLine(" Right :" + _arrayHeap[RightChildIndex(i)]);
+                    Console.WriteLine(" Right : " + _arrayHeap[RightChildIndex(i)].ToString());
                 Console.WriteLine();
             }
         }

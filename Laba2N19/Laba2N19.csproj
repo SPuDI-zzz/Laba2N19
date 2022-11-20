@@ -45,9 +45,12 @@
   <ItemGroup>
     <Compile Include="ArrayHeap.cs" />
     <Compile Include="HeapException.cs" />
+    <Compile Include="HeapUtils.cs" />
     <Compile Include="IHeap.cs" />
+    <Compile Include="LinkedHeap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnmutableHeap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

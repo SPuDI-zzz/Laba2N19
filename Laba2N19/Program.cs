@@ -58,17 +58,62 @@ namespace Laba2N19
         
         static void Main(string[] args)
         {
-            ArrayHeap<int> heap = new ArrayHeap<int>();
-            heap.Add(3);
+            /*LinkedHeap<int> heap = new LinkedHeap<int>();
             heap.Add(13);
+            heap.Add(3);
             heap.Add(7);
             heap.Add(16);
             heap.Add(21);
             heap.Add(12);
             heap.Add(9);
-            heap.Print();
-            
+            heap.Add(17);
+            //heap.Print();
+            foreach (var item in heap)
+            {
+                Console.WriteLine(item);
+            }
+
+            List<int> list = new List<int>();
+            //list.Add(13);
+            list.Remove(34);
+
+            heap.Remove(174);
+            //heap.Print();
+            foreach (var item in heap)
+            {
+                Console.WriteLine(item);
+            }
+
+            ArrayHeap<string> heapstr = new ArrayHeap<string>();
+            heapstr.Add("sada");
+            heapstr.Add("weqeq");
+            heapstr.Add("13213");
+            heapstr.Print();*/
+
+            ArrayHeap<int> arrayHeap = new ArrayHeap<int>();
+            LinkedHeap<int> linkedHeap = new LinkedHeap<int>();
+            Console.WriteLine("Testung ArrayHeap");
+            TestHeap(arrayHeap);
+
             Console.ReadLine();
         }
+
+        private static void TestHeap(IHeap<int> heap)
+        {
+            heap.Add(13);
+            heap.Add(3);
+            heap.Add(7);
+            heap.Add(16);
+            heap.Add(21);
+            heap.Add(12);
+            heap.Add(9);
+            heap.Add(17);
+            
+            /*QueueToConsole(queue);
+            queue.Clear();
+            QueueToConsole(queue);*/
+            Console.WriteLine();
+        }
+
     }
 }
