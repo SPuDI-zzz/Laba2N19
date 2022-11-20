@@ -35,7 +35,7 @@ namespace Laba2N19
             do
             {
                 yield return _arrayHeap[current];
-                current = (current + 1);
+                current++;
             } while (current < Count);
         }
 

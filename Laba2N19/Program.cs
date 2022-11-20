@@ -109,11 +109,88 @@ namespace Laba2N19
             heap.Add(9);
             heap.Add(17);
             
+            LinkedList<int> list = new LinkedList<int>();
             /*QueueToConsole(queue);
             queue.Clear();
             QueueToConsole(queue);*/
             Console.WriteLine();
         }
+        /*static void Main()
+        {
+            ArrayQueue<int> array = new ArrayQueue<int>();
+            LinkedQueue<int> linked = new LinkedQueue<int>();
+            Console.WriteLine("Testing ArrayQueue");
+            TestQueue(array);
+            Console.WriteLine("Testing LinkedQueue");
+            TestQueue(linked);
+            Console.WriteLine("Testing universal utils with ArrayQueue");
+            TestUniversalQueueUtils(array);
+            Console.WriteLine("Testing universal utils with LinkedQueue");
+            TestUniversalQueueUtils(linked);
+            Console.WriteLine("Testing ArrayQueue utils");
+            TestArrayQueueUtils(array);
+            Console.WriteLine("Testing LinkedQueue utils");
+            TestLinkedQueueUtils(linked);
+            Console.ReadLine();
+        }
 
+        private static void QueueToConsole(IQueue<int> queue)
+        {
+            foreach (int i in queue)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        private static void TestQueue(IQueue<int> queue)
+        {
+            queue.Push(1);
+            queue.Push(2);
+            Console.WriteLine(queue.Pop());
+            queue.Push(3);
+            Console.WriteLine(queue.Peek());
+            QueueToConsole(queue);
+            queue.Clear();
+            QueueToConsole(queue);
+            Console.WriteLine();
+        }
+
+        private static void TestUniversalQueueUtils(IQueue<int> queue)
+        {
+            queue.Push(-1);
+            queue.Push(2);
+            queue.Push(3);
+            Console.WriteLine(QueueUtils.Exists(queue, elem => elem < 0));
+            QueueUtils.ForEach(queue, elem => elem * 2);
+            QueueToConsole(queue);
+            Console.WriteLine(QueueUtils.CheckForAll(queue, elem => elem > 0));
+            Console.WriteLine();
+        }
+
+        private static void TestArrayQueueUtils(IQueue<int> queue)
+        {
+            IQueue<int> result = QueueUtils.FindAll(queue, elem => elem > 0, QueueUtils.ArrayQueueConstructor<int>());
+            QueueToConsole(result);
+            IQueue<string> resultStr = QueueUtils.ConvertAll(queue, elem => elem.ToString(),
+                QueueUtils.ArrayQueueConstructor<string>());
+            foreach (string str in resultStr)
+            {
+                Console.WriteLine(str);
+            }
+            Console.WriteLine();
+        }
+
+        private static void TestLinkedQueueUtils(IQueue<int> queue)
+        {
+            IQueue<int> result = QueueUtils.FindAll(queue, elem => elem > 0, QueueUtils.LinkedQueueConstructor<int>());
+            QueueToConsole(result);
+            IQueue<string> resultStr = QueueUtils.ConvertAll(queue, elem => elem.ToString(),
+                QueueUtils.LinkedQueueConstructor<string>());
+            foreach (string str in resultStr)
+            {
+                Console.WriteLine(str);
+            }
+            Console.WriteLine();
+        }*/
     }
 }

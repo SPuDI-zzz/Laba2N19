@@ -101,6 +101,16 @@ namespace Laba2N19
             SwapAsNeeded(ref _rightChild._value, ref _value);           
         }
 
+        /*public T this[int index]
+        {
+            get
+            {
+                if (index == 0) return _value;
+                if (index) return -_leftChild
+                        _rightChild
+            }
+        }*/
+
         private LinkedHeap<T> SearchRoot(T value)
         {
             if (this == null || value == null) return null;
@@ -223,6 +233,26 @@ namespace Laba2N19
 
         public IEnumerator<T> GetEnumerator()
         {
+            int current = 0;
+            LinkedHeap<T> heap = this;
+            do
+            {
+                //if (heap._value == null) yield break;
+                yield return heap._value;
+
+                current++;
+                if (heap._leftChild == null)
+                    yield break;
+                
+
+                //if (heap._value == null) yield break;
+                //yield return heap._value;
+                current++;
+
+
+            } while (current < Count);
+            
+            
             if (_value == null) yield break;
             yield return _value;
 
