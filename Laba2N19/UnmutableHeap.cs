@@ -48,6 +48,11 @@ namespace Laba2N19
             return _heap.Contains(node);
         }
 
+        public void Print()
+        {
+            _heap.Print();
+        }
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

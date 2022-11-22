@@ -8,17 +8,15 @@ namespace Laba2N19
 {
     public class HeapUtils<T> where T : IComparable<T>
     {
-        public delegate bool CheckDelegate<T>(T value);
+        public delegate bool CheckDelegate<U>(T value);
 
-        public delegate IHeap<T> HeapConstructorDelegate<T>()/* where T : IComparable<T>*/;
+        public delegate IHeap<T> HeapConstructorDelegate<K>();
 
-        public delegate T ActionDelegate<T>(T value);
+        public delegate T ActionDelegate<U>(T value);
 
-        public delegate TO ConvertDelegate<in TI, out TO>(TI value);
+        public static readonly HeapConstructorDelegate<T> ArrayHeapConstructer = () => new ArrayHeap<T>(); 
 
-        public static readonly HeapConstructorDelegate<T> ArrayHeapConstructer = () => { return new ArrayHeap<T>(); };
-
-        public static HeapConstructorDelegate<T> LinkedHeapConstructer = () => { return new LinkedHeap<T>(); };
+        public static HeapConstructorDelegate<T> LinkedHeapConstructer = () => new LinkedHeap<T>();
 
         public static bool Exists(IHeap<T> heap, CheckDelegate<T> checkDelegate)
         {
@@ -29,12 +27,14 @@ namespace Laba2N19
                     return true;
                 }
             }
+
             return false;
         }
 
         public static IHeap<T> FindAll(IHeap<T> tree, CheckDelegate<T> checkDelegate, HeapConstructorDelegate<T> constructorDelegate)
         {
             var tempHeap = constructorDelegate();
+
             foreach (var item in tree)
             {
                 if (checkDelegate(item))
@@ -42,26 +42,45 @@ namespace Laba2N19
                     tempHeap.Add(item);
                 }
             }
+
             return tempHeap;
         }
 
-        public static void ForEach(IHeap<T> tree, ActionDelegate<T> del)
+        public static void ForEach(IHeap<T> heap, ActionDelegate<T> del)
         {
-            var tempTree = tree as ArrayHeap<T>;
-            var tempTree2 = tree as LinkedHeap<T>;
-            if (tempTree != null)
+            ArrayHeap<T> tempArrayHeap = new ArrayHeap<T>();  
+            IHeap<T> tempHeap = heap as ArrayHeap<T>;
+
+            if (tempHeap != null)
             {
-                foreach (var item in tempTree)
+                foreach (var item in tempHeap)
                 {
-                    tree.Remove(item);
-                    tree.Add(del(item));
+                    tempArrayHeap.Add(del(item));
                 }
+
+                heap.Clear();
+
+                foreach (var item in tempArrayHeap)
+                {
+                    heap.Add(item);
+                }
+
                 return;
             }
-            foreach (var item in tempTree2)
+
+            LinkedHeap<T> tempLinkedHeap = new LinkedHeap<T>();
+            tempHeap = heap as LinkedHeap<T>;
+
+            foreach (var item in tempHeap)
             {
-                tree.Remove(item);
-                tree.Add(del(item));
+                tempLinkedHeap.Add(del(item));
+            }
+
+            heap.Clear();
+
+            foreach (var item in tempLinkedHeap)
+            {
+                heap.Add(item);
             }
         }
 
@@ -74,6 +93,7 @@ namespace Laba2N19
                     return false;
                 }
             }
+
             return true;
         }
     }

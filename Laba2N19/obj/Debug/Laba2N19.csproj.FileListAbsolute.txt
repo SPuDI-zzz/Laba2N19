@@ -5,3 +5,11 @@ C:\Users\lyubavin_dv\Desktop\Laba2N19-master\Laba2N19\obj\Debug\Laba2N19.csprojA
 C:\Users\lyubavin_dv\Desktop\Laba2N19-master\Laba2N19\obj\Debug\Laba2N19.csproj.CoreCompileInputs.cache
 C:\Users\lyubavin_dv\Desktop\Laba2N19-master\Laba2N19\obj\Debug\Laba2N19.exe
 C:\Users\lyubavin_dv\Desktop\Laba2N19-master\Laba2N19\obj\Debug\Laba2N19.pdb
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\bin\Debug\Laba2N19.exe.config
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\bin\Debug\Laba2N19.exe
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\bin\Debug\Laba2N19.pdb
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\obj\Debug\Laba2N19.csproj.AssemblyReference.cache
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\obj\Debug\Laba2N19.csproj.SuggestedBindingRedirects.cache
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\obj\Debug\Laba2N19.csproj.CoreCompileInputs.cache
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\obj\Debug\Laba2N19.exe
+C:\Users\SPuDI\source\repos\Laba2N19\Laba2N19\obj\Debug\Laba2N19.pdb

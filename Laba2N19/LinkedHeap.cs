@@ -46,24 +46,6 @@ namespace Laba2N19
             _leftChild = _rightChild = null;
         }
 
-        private void SwapAsNeeded(ref T newValue, ref T oldValue)
-        {
-            if (newValue.CompareTo(oldValue) == -1)
-            {
-                (newValue, oldValue) = (oldValue, newValue);
-            }
-        }
-
-        private bool IsLeftSide()
-        {
-            return Count < _level - _level / 4;
-        }
-
-        private int UpLevelAsNeeded()
-        {
-            return _level <= Count ? _level * 2 : _level ;
-        }
-
         public void Add(T value)
         {
             if (IsEmpty)
@@ -97,46 +79,9 @@ namespace Laba2N19
                 SwapAsNeeded(ref _leftChild._value, ref _value);
                 return;
             }
+
             _rightChild.Add(value);
             SwapAsNeeded(ref _rightChild._value, ref _value);           
-        }
-
-        /*public T this[int index]
-        {
-            get
-            {
-                if (index == 0) return _value;
-                if (index) return -_leftChild
-                        _rightChild
-            }
-        }*/
-
-        private LinkedHeap<T> SearchRoot(T value)
-        {
-            if (this == null || value == null) return null;
-
-            if (_value.CompareTo(value) == 0) return this;
-
-            if (_value.CompareTo(value) > 0) return null;
-
-            return _leftChild?.SearchRoot(value) ?? _rightChild?.SearchRoot(value);
-        }
-
-        private LinkedHeap<T> SearchLastLeafParent()
-        {
-            if (_leftChild == null && _rightChild == null) return _parent;
-            if (IsLeftSide())
-            {
-                return _leftChild.SearchLastLeafParent();
-            }
-            return _rightChild.SearchLastLeafParent();
-        }
-
-        private void BalanceLevel()
-        {
-            if (_level % Count == 0) _level /= 2;
-            Count--;
-            _parent?.BalanceLevel();
         }
 
         public void Remove(T value)
@@ -163,6 +108,7 @@ namespace Laba2N19
                     nodeLastLeafParent._rightChild = null;
                     return;
                 }
+
                 node._value = nodeLastLeafParent._rightChild._value;
                 nodeLastLeafParent._rightChild = null;
             }
@@ -173,41 +119,12 @@ namespace Laba2N19
                     nodeLastLeafParent._leftChild = null;
                     return;
                 }
+
                 node._value = nodeLastLeafParent._leftChild._value;
                 nodeLastLeafParent._leftChild = null;
             }
-            
+
             node.Heapify();
-        }
-
-        private void Heapify()
-        {
-            if (this == null) return;
-            LinkedHeap<T> child = _leftChild;
-
-            if (_rightChild?._value.CompareTo(_leftChild._value) == -1)
-            {
-                child = _rightChild;
-            }
-
-            if (_value.CompareTo(child._value) == -1) return;
-            (child._value, _value) = (_value, child._value);
-            child.Heapify();
-        }
-
-        private void Heapify(LinkedHeap<T> root) 
-        {
-            if (root == null) return;
-            LinkedHeap<T> child = root._leftChild;
-
-            if (root._rightChild?._value.CompareTo(root._leftChild._value) == -1)
-            {
-                child = root._rightChild;
-            }
-
-            if (root._value.CompareTo(child._value) == -1) return;
-            (child._value, root._value) = (root._value, child._value);
-            Heapify(child);
         }
 
         public void Clear()
@@ -233,46 +150,128 @@ namespace Laba2N19
 
         public IEnumerator<T> GetEnumerator()
         {
-            int current = 0;
-            LinkedHeap<T> heap = this;
-            do
+            for (int i = 0; i < Count; i++)
             {
-                //if (heap._value == null) yield break;
-                yield return heap._value;
+                yield return this[i];
+            }
+        }
 
-                current++;
-                if (heap._leftChild == null)
-                    yield break;
-                
+        public void Print()
+        {
+            if (Count > 0) PrintPretty("", true);
+        }
 
-                //if (heap._value == null) yield break;
-                //yield return heap._value;
-                current++;
-
-
-            } while (current < Count);
-            
-            
-            if (_value == null) yield break;
-            yield return _value;
-
-            if (_leftChild != null)
+        private void SwapAsNeeded(ref T newValue, ref T oldValue)
+        {
+            if (newValue.CompareTo(oldValue) == -1)
             {
-                foreach (var v in _leftChild)
+                (newValue, oldValue) = (oldValue, newValue);
+            }
+        }
+
+        private bool IsLeftSide()
+        {
+            return Count < _level - _level / 4;
+        }
+
+        private int UpLevelAsNeeded()
+        {
+            return _level <= Count ? _level * 2 : _level;
+        }
+
+        private T this[int index]
+        {
+            get
+            {
+                if (index == 0) return _value;
+
+                int level = 2;
+
+                while (level <= index + 1)
                 {
-                    if (v == null) yield break;
-                    yield return v;
+                    level *= 2;
                 }
+
+                if (index + 1 < level - level / 4)
+                {
+                    return _leftChild[index / 2];
+                }
+
+                return _rightChild[index / 2 - 1];
+            }
+        }
+
+        private LinkedHeap<T> SearchRoot(T value)
+        {
+            if (this == null || value == null) return null;
+
+            if (_value.CompareTo(value) == 0) return this;
+
+            if (_value.CompareTo(value) > 0) return null;
+
+            return _leftChild?.SearchRoot(value) ?? _rightChild?.SearchRoot(value);
+        }
+
+        private LinkedHeap<T> SearchLastLeafParent()
+        {
+            if (_leftChild == null && _rightChild == null) return _parent;
+
+            if (IsLeftSide())
+            {
+                return _leftChild.SearchLastLeafParent();
             }
 
-            if (_rightChild != null)
+            return _rightChild.SearchLastLeafParent();
+        }
+
+        private void BalanceLevel()
+        {
+            if (_level % Count == 0) _level /= 2;
+
+            Count--;
+            _parent?.BalanceLevel();
+        }        
+
+        private void Heapify()
+        {
+            if (this == null || _leftChild == null) return;
+            LinkedHeap<T> child = _leftChild;
+
+            if (_rightChild?._value.CompareTo(_leftChild._value) == -1)
             {
-                foreach (var v in _rightChild)
-                {
-                    if (v == null) yield break;
-                    yield return v;
-                }
-            } 
+                child = _rightChild;
+            }
+
+            if (_value.CompareTo(child._value) == -1) return;
+            (child._value, _value) = (_value, child._value);
+            child.Heapify();
+        }
+        
+        private void PrintPretty(string indent, bool last)
+        {
+            Console.Write(indent);
+
+            if (last)
+            {
+                Console.Write("└─");
+                indent += "  ";
+            }
+            else
+            {
+                Console.Write("├─");
+                indent += "| ";
+            }
+            Console.WriteLine(_value);
+
+            var children = new List<LinkedHeap<T>>();
+
+            if (this._leftChild != null)
+                children.Add(this._leftChild);
+            if (this._rightChild != null)
+                children.Add(this._rightChild);
+
+            for (int i = 0; i < children.Count; i++)
+                children[i].PrintPretty(indent, i == children.Count - 1);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

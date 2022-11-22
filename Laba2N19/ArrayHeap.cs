@@ -13,55 +13,12 @@ namespace Laba2N19
 
         private T[] _arrayHeap;
 
-        //private int StartPosition, EndPosition;
-
         public int Count { get; private set; }
-        public bool IsEmpty { get { return Count == 0; } private set { } }
 
-        private bool IsFull()
-        {
-            return Count == _size;
-        }
+        public bool IsEmpty { get { return Count == 0; } private set { } }
 
         public IEnumerable<T> Nodes { get; private set; }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            if (IsEmpty)
-            {
-                yield break;
-            }
-            int current = 0;
-            do
-            {
-                yield return _arrayHeap[current];
-                current++;
-            } while (current < Count);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        private int ParentIndex(int index)
-        {
-            return (index - 1) / 2;
-        }
-
-        private int LeftChildIndex(int index)
-        {
-            return (index * 2) + 1;
-        }
-
-        private int RightChildIndex(int index)
-        {
-            return (index * 2) + 2;
-        }
-
-        private void Swap(int oldIndex, int newIndex)
-        {
-            T tmp = _arrayHeap[oldIndex];
-            _arrayHeap[oldIndex] = _arrayHeap[newIndex];
-            _arrayHeap[newIndex] = tmp;
-        }
         public ArrayHeap()
         {
             _size = 4;
@@ -76,7 +33,6 @@ namespace Laba2N19
             _arrayHeap = new T[_size];
         }
 
-        //public IEnumerator IEnumerable.GetEnumerator
         public void Add(T node)
         {
             if (IsFull())
@@ -96,34 +52,7 @@ namespace Laba2N19
                 currentIndex = ParentIndex(currentIndex);
             }
         }
-        public void Clear()
-        {
-            Array.Resize(ref _arrayHeap, 4);
-            Count = 0;
-        }
-        public bool Contains(T node)
-        {
-            if (IsEmpty) return false;
-            return Array.IndexOf(_arrayHeap, node) != -1; 
-        }
-        private void Heapify(int index)
-        {
-            while (index < Count)
-            {
-                int leftChildIndex = LeftChildIndex(index);
-                if (leftChildIndex >= Count) break;
 
-                int childIndex = leftChildIndex;
-                int rightChildIndex = RightChildIndex(index);
-                if (rightChildIndex < Count && _arrayHeap[rightChildIndex].CompareTo(_arrayHeap[leftChildIndex]) == -1)
-                {
-                    childIndex = rightChildIndex;
-                }
-                if (_arrayHeap[index].CompareTo(_arrayHeap[childIndex]) == -1) break;
-                Swap(index, childIndex);
-                index = childIndex;
-            }
-        }
         public void Remove(T node)
         {
             if (IsEmpty)
@@ -144,6 +73,19 @@ namespace Laba2N19
             Heapify(index);
         }
 
+        public void Clear()
+        {
+            _size = 4;
+            Array.Resize(ref _arrayHeap, _size);
+            Count = 0;
+        }
+
+        public bool Contains(T node)
+        {
+            if (IsEmpty) return false;
+            return Array.IndexOf(_arrayHeap, node) != -1; 
+        }
+
         public void Print()
         {
             for (int i = 0; i < (Count / 2); i++)
@@ -157,5 +99,70 @@ namespace Laba2N19
             }
         }
 
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (IsEmpty)
+            {
+                yield break;
+            }
+
+            int current = 0;
+
+            do
+            {
+                yield return _arrayHeap[current];
+                current++;
+            } while (current < Count);
+        }
+
+        private bool IsFull()
+        {
+            return Count == _size;
+        }
+
+        private int ParentIndex(int index)
+        {
+            return (index - 1) / 2;
+        }
+
+        private int LeftChildIndex(int index)
+        {
+            return (index * 2) + 1;
+        }
+
+        private int RightChildIndex(int index)
+        {
+            return (index * 2) + 2;
+        }
+
+        private void Swap(int oldIndex, int newIndex)
+        {
+            (_arrayHeap[newIndex], _arrayHeap[oldIndex]) = (_arrayHeap[oldIndex], _arrayHeap[newIndex]);
+        }
+
+        private void Heapify(int index)
+        {
+            while (index < Count)
+            {
+                int leftChildIndex = LeftChildIndex(index);
+
+                if (leftChildIndex >= Count) break;
+
+                int childIndex = leftChildIndex;
+                int rightChildIndex = RightChildIndex(index);
+
+                if (rightChildIndex < Count && _arrayHeap[rightChildIndex].CompareTo(_arrayHeap[leftChildIndex]) == -1)
+                {
+                    childIndex = rightChildIndex;
+                }
+
+                if (_arrayHeap[index].CompareTo(_arrayHeap[childIndex]) == -1) break;
+
+                Swap(index, childIndex);
+                index = childIndex;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

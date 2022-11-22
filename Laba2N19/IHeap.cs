@@ -14,6 +14,7 @@ namespace Laba2N19
         void Add(T node);
         void Clear();
         bool Contains(T node);
-        void Remove(T node);        
+        void Remove(T node);
+        void Print();
     }
 }
